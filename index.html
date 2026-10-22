@@ -8,7 +8,7 @@ canvas{display:block;position:fixed;left:0;top:0;width:100%;height:100%}
 #pad{position:fixed;bottom:12px;left:10px;right:10px;display:none;justify-content:space-between;z-index:3;pointer-events:none}
 #pad button{pointer-events:auto;width:72px;height:72px;font-size:30px;border-radius:50%;border:3px solid #fff;background:rgba(31,138,192,.7);color:#fff;padding:0}
 .mb{position:fixed;left:50%;transform:translateX(-50%);display:none;z-index:4;font-size:18px;font-weight:bold;font-family:inherit;padding:10px 20px;border-radius:30px;border:3px solid #fff;color:#fff;white-space:nowrap}
-#howb{bottom:150px;background:#2e8b57}#logb{bottom:96px;background:#e0a526}#inst{bottom:42px;background:#1f8ac0}
+#howb{bottom:150px;background:#2e8b57}#logb{bottom:96px;background:#e0a526}#inst{bottom:42px;background:#1f8ac0}@media (orientation:landscape) and (max-height:520px) and (min-width:560px){.mb{left:auto;right:calc(10px + env(safe-area-inset-right));transform:none}#howb{bottom:auto;top:116px}#logb{bottom:auto;top:174px}#inst{bottom:auto;top:232px}}
 #ios{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);display:none;z-index:4;background:#123e5e;color:#fff;padding:6px 12px;border-radius:12px;font-size:13px;text-align:center;width:80vw}
 #panel{position:fixed;inset:0;display:none;z-index:6;background:rgba(10,40,60,.6);align-items:center;justify-content:center}
 #pbox{background:#fffaf0;border:5px solid #1f8ac0;border-radius:20px;width:min(88vw,460px);max-height:78vh;overflow:auto;padding:14px 16px;color:#123e5e;font-size:16px;line-height:1.4;touch-action:pan-y}
@@ -108,6 +108,14 @@ function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.
 function pop(s,x,y,col,sz){pops.push({s,x,y,c:col||'#fff',t:0,sz:sz||22})}
 function burst(x,y,n,cols,sp){for(let i=0;i<n;i++){const a=R()*TAU,v=(1+R()*3)*S*(sp||1);parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1.5*S,l:30+R()*30,c:PICK(cols),r:(2+R()*3)*S})}}
 function say(m,d){msg=m;msgT=d||120}
+// UI scale: never smaller than 16 CSS px text (S alone shrinks to ~8px in landscape)
+const U=()=>Math.max(S,DPR*16/14.5),F=n=>Math.max(n*U(),16*DPR),WIDE=()=>W>H&&W/DPR>=560,PW=()=>WIDE()?Math.min(W*.88,480*DPR,W-360*DPR):W*.88;
+function wrapL(s,sz,mw){g.font=`bold ${sz}px "Comic Sans MS","Chalkboard SE","Trebuchet MS",sans-serif`;if(g.measureText(s).width<=mw)return[s];const L=[];let cur='';for(const x of String(s).split(' ')){const tr=cur?cur+' '+x:x;if(cur&&g.measureText(tr).width>mw){L.push(cur);cur=x}else cur=tr}if(cur)L.push(cur);return L}
+function wtxt(s,x,y,sz,fill,stroke,mw,va){const L=wrapL(s,sz,mw||W-24*DPR),lh=sz*1.18;let w=0;for(const l of L)w=Math.max(w,g.measureText(l).width);const y0=va=='bottom'?y-(L.length-1)*lh:va=='top'?y:y-(L.length-1)*lh/2;
+ const xx=CL(x,w/2+8*DPR,Math.max(w/2+8*DPR,W-w/2-8*DPR));L.forEach((l,i)=>txt(l,xx,y0+i*lh,sz,fill,stroke));return{n:L.length,h:L.length*lh,w}}
+function panelT(y0,items){const u=U(),mw=PW()-28*u;let h=12*u;const rows=[];for(const it of items){if(it[0]==null){rows.push([null,h+it[1]/2]);h+=it[1];continue}
+  for(const l of wrapL(it[0],it[1],mw)){rows.push([l,it[1],it[2],it[3],h+it[1]*.62]);h+=it[1]*1.2}h+=(it[4]==null?5:it[4])*u}h+=8*u;
+ const y=Math.max(4*DPR,Math.min(y0,H-8*DPR-h));panel(y,h);const sp=[];for(const r of rows){if(r[0]==null)sp.push(y+r[1]);else txt(r[0],W/2,y+r[4],r[1],r[2],r[3])}return{y,h,sp}}
 const SY=()=>H*.34,BOT=()=>H-40*S,BX=()=>W*.2,BY=()=>H*.74;
 // ---------- game flow
 function startGame(lv){score=0;hearts=3;cooler=[];snaps=0;overSold=0;SND.start();startLevel(lv)}
@@ -336,7 +344,7 @@ function drawDrive(){const a=area,by=BY();g.fillStyle=a.w1;g.fillRect(0,0,W,H);
    g.strokeStyle='rgba(180,240,255,.85)';g.lineWidth=3*S;const cd=-away;for(let i=0;i<5;i++){const yy=zy-deep.zy*.8+i*deep.zy*.4,xs=deep.x-cd*deep.zx*.8+cd*((t*2.5*S+i*47*S)%(deep.zx*1.6)),xe=xs+cd*14*S;g.beginPath();g.moveTo(xs,yy);g.lineTo(xe,yy);g.lineTo(xe-cd*6*S,yy-5*S);g.moveTo(xe,yy);g.lineTo(xe-cd*6*S,yy+5*S);g.stroke()}
    g.restore();const pr=deep.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(0,20,60,.55)';g.beginPath();g.arc(deep.x,zy,pr,0,TAU);g.fill();g.strokeStyle=ok?'rgba(120,255,210,.95)':'rgba(255,120,120,.95)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
    txt('🌊🎣',deep.x,zy-4*S,FS(20),'#fff');const lx=CL(deep.x,70*S,W-70*S);txt(ok?'DEEP SPOT':`DEEP · need 🚤${deep.need}`,lx,zy+deep.r+16*S,FS(17),ok?'#7fffd0':'#ffd0d0','#04163a')}
-  else if(zy<-deep.zy-40*S&&zy>-2000*S){const lx=CL(deep.x,60*S,W-60*S);txt(ok?'🌊 Deep spot ahead':`🌊 Deep spot · need 🚤${deep.need}`,lx,Math.max(150*S,108*DPR),FS(16),ok?'#7fffd0':'#ffd0d0','#04163a')}}
+  else if(zy<-deep.zy-40*S&&zy>-2000*S){const lx=CL(deep.x,60*S,W-60*S);txt(ok?'🌊 Deep spot ahead':`🌊 Deep spot · need 🚤${deep.need}`,lx,HB+(WIDE()?44:52)*U(),FS(16),ok?'#7fffd0':'#ffd0d0','#04163a')}}
  // spot
  const spy=by-(spot.d-dist);if(spy>-80*S&&spy<H+80*S){const pr=spot.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(255,240,120,.25)';g.beginPath();g.arc(spot.x,spy,pr,0,TAU);g.fill();g.strokeStyle='rgba(255,240,120,.9)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
   circ(spot.x,spy,12*S,'#ff4a4a');g.fillStyle='#fff';g.fillRect(spot.x-12*S,spy-3*S,24*S,6*S);txt('🎣',spot.x,spy-26*S,22*S,'#fff')}
@@ -350,22 +358,34 @@ function drawDrive(){const a=area,by=BY();g.fillStyle=a.w1;g.fillRect(0,0,W,H);
   else{g.fillStyle='#b07a3a';g.fillRect(x-o.r,y-o.r,o.r*2,o.r*2);g.strokeStyle='#6a4a1a';g.lineWidth=2*S;g.strokeRect(x-o.r,y-o.r,o.r*2,o.r*2);g.beginPath();g.moveTo(x-o.r,y-o.r);g.lineTo(x+o.r,y+o.r);g.stroke()}}
  for(const w of wake){const y=by-(w.d-dist);g.strokeStyle=`rgba(255,255,255,${w.a*.7})`;g.lineWidth=3*S;const sp=(1-w.a)*30*S+8*S;g.beginPath();g.moveTo(w.x-sp,y+4*S);g.lineTo(w.x-sp-4*S,y+8*S);g.moveTo(w.x+sp,y+4*S);g.lineTo(w.x+sp+4*S,y+8*S);g.stroke()}
  if(!(inv>0&&t%10<5))topBoat(boat.x,by,boat.ang,S);
- const k=CL(dist/spot.d,0,1);g.fillStyle='rgba(0,0,0,.25)';rr(14*S,66*S,W*.5,14*S,7*S);g.fill();g.fillStyle='#ffe14a';rr(14*S,66*S,Math.max(14*S,W*.5*k),14*S,7*S);g.fill();txt('🚤',14*S+W*.5*k,73*S,16*S,'#fff');txt('🎣',W*.5+26*S,73*S,16*S,'#fff');txt(`🚤 Power ${boatPow()}`,W-12*S,Math.max(73*S,72*DPR),Math.max(16*S,16*DPR),'#fff','#123e5e','right')}
+}
 // ---------- HUD / overlays
-function hud(){g.fillStyle='rgba(10,40,60,.45)';g.fillRect(0,0,W,58*S);txt('❤️'.repeat(Math.max(0,hearts))+'🤍'.repeat(Math.max(0,3-hearts)),10*S,18*S,17*S,'#fff',null,'left');txt(`Lv ${level} · ${area.n}`,10*S,42*S,15*S,'#fff','#123e5e','left');
- txt(`Score ${score}`,W*.5,18*S,15*S,'#ffe14a','#123e5e');txt(`Best ${best}`,W*.5,40*S,12*S,'#fff','#123e5e');
- if(state=='fish'||state=='clear'){const k=CL(lb/target,0,1),x=14*S,y=66*S,w=W-28*S;g.fillStyle='rgba(0,0,0,.3)';rr(x,y,w,20*S,10*S);g.fill();g.fillStyle=k>=1?'#7fe05a':'#ffb03a';rr(x,y,Math.max(20*S,w*k),20*S,10*S);g.fill();txt(`🐟 ${lb.toFixed(1)} / ${target} lb`,W/2,y+10*S,14*S,'#fff','#123e5e');
-  if(state=='fish'&&!card&&!wave){const hint=fight?'HOLD to reel in · LET GO when it goes red!':line.st=='idle'?'Swipe ➡ to CAST · tap to DROP the line':line.st=='water'?'HOLD to sink deeper · let go to reel up':'';txt(hint,W/2,H-16*S,14*S,'#fff','#123e5e');
-  txt(`🪙 ${coins} · 🧵 ${lineLb()} lb · 🎣 ${RODS[GEAR.rod|0].n}${lure?' · '+lure.e+' '+lure.n:''}`,W/2,H-36*S,12*S,'#fff','#123e5e')}}
- if(fight){const f=fight,x=W*.15,y=96*S,w=W*.7;g.fillStyle='rgba(0,0,0,.35)';rr(x-4*S,y-4*S,w+8*S,26*S,13*S);g.fill();const gr=g.createLinearGradient(x,0,x+w,0);gr.addColorStop(0,'#5ad0ff');gr.addColorStop(.6,'#7fe05a');gr.addColorStop(.85,'#ffd03a');gr.addColorStop(1,'#ff3a3a');g.fillStyle=gr;rr(x,y,w*CL(f.ten,0,1),18*S,9*S);g.fill();
-  g.fillStyle='rgba(255,255,255,.9)';g.fillRect(x+w*.85-1*S,y-3*S,2.5*S,24*S);txt(f.ten>.85?'⚠️ TOO TIGHT! LET GO!':f.run>0?'It\'s running! 🐟💨':`Tension ${Math.round(CL(f.ten,0,1)*100)}%`,W/2,y+9*S,13*S,'#fff','#123e5e');
-  txt(`🧵 ${lineLb()} lb line · pull ${Math.round(f.load||0)} lb`,W/2,y+46*S,12*S,f.load>lineLb()?'#ffb0b0':'#fff','#123e5e');g.fillStyle='rgba(255,255,255,.3)';rr(x,y+26*S,w,8*S,4*S);g.fill();g.fillStyle='#fff';rr(x,y+26*S,w*CL(f.prog,0,1),8*S,4*S);g.fill()}
- if(msgT>0)txt(msg,W/2,state=='drive'?H*.3:SY()+44*S,20*S,'#fff','#123e5e');
- for(const p of pops)txt(p.s,p.x,p.y-p.t*.8*S,p.sz*S,p.c,'#123e5e')}
-function panel(y,h){g.fillStyle='rgba(255,250,240,.94)';rr(W*.06,y,W*.88,h,22*S);g.fill();g.strokeStyle='#1f8ac0';g.lineWidth=5*S;g.stroke()}
-function drawCard(){const cd=card,y=H*.36;panel(y,190*S);txt(cd.isNew?'✨ NEW CATCH! ✨':'Nice catch!',W/2,y+24*S,18*S,'#e05a3a');
- if(cd.j){drawJunk(cd.f.j.k,W/2,y+80*S,S*2.2,Math.sin(t*.1)*.15);txt(cd.f.j.n+'!',W/2,y+136*S,22*S,'#123e5e');txt('Junk: 0 lb · +15 cleanup points ♻️',W/2,y+164*S,14*S,'#2e8b57')}
- else{const L=Math.min(cd.f.len*1.4,W*.6);drawFish(cd.f.sp,W/2,y+80*S,L,1,Math.sin(t*.15)*.08);txt(cd.f.sp[0],W/2,y+136*S,22*S,'#123e5e');txt(`${cd.f.wt.toFixed(1)} lb!  +${Math.round(cd.f.wt*10)} pts · 🪙${fishPrice(cd.f.sp,cd.f.wt)}`,W/2,y+164*S,17*S,'#1f8ac0')}}
+let HB=58;
+function hud(){const u=U(),wide=WIDE(),xR=W-172*DPR,f15=F(15),fh=F(17);g.font=`bold ${f15}px "Comic Sans MS","Chalkboard SE","Trebuchet MS",sans-serif`;
+ const lv=`Lv ${level} · ${area.n}`,sc=`Score ${score}`,bs=`Best ${best}`,lvW=g.measureText(lv).width,scW=g.measureText(sc).width,bsW=g.measureText(bs).width,hW=fh*3.4;
+ const r1=10*u+hW+12*u+scW<=xR,r2=10*u+lvW+12*u+bsW<=xR;HB=(r1&&r2?58:82)*u;g.fillStyle='rgba(10,40,60,.45)';g.fillRect(0,0,W,HB);
+ txt('❤️'.repeat(Math.max(0,hearts))+'🤍'.repeat(Math.max(0,3-hearts)),10*u,18*u,fh,'#fff',null,'left');txt(lv,10*u,42*u,f15,'#fff','#123e5e','left');
+ if(r1)txt(sc,xR,18*u,f15,'#ffe14a','#123e5e','right');else txt(sc,10*u,68*u,f15,'#ffe14a','#123e5e','left');
+ if(r2)txt(bs,xR,42*u,f15,'#fff','#123e5e','right');else txt(bs,W-12*u,68*u,f15,'#fff','#123e5e','right');
+ // progress bar: inside the top bar when wide (landscape), else just below it
+ const sx0=10*u+Math.max(hW,lvW)+18*u,sx1=xR-Math.max(r1?scW:0,r2?bsW:0)-18*u,slot=wide&&r1&&r2&&sx1-sx0>=150*DPR,bh=Math.max(20*u,F(14)+6*DPR);
+ const bar=slot?{x:sx0,y:HB/2-bh/2,w:sx1-sx0}:{x:14*u,y:HB+8*u,w:W-28*u};let below=slot?HB:bar.y+bh;
+ if(state=='drive'){const k=CL(dist/spot.d,0,1),bw=slot?bar.w:W*.5;g.fillStyle='rgba(0,0,0,.25)';rr(bar.x,bar.y+bh*.2,bw,bh*.6,bh*.3);g.fill();g.fillStyle='#ffe14a';rr(bar.x,bar.y+bh*.2,Math.max(bh*.6,bw*k),bh*.6,bh*.3);g.fill();txt('🚤',bar.x+bw*k,bar.y+bh/2,F(16),'#fff');txt('🎣',bar.x+bw+F(16)*.8,bar.y+bh/2,F(16),'#fff');
+  txt(`🚤 Power ${boatPow()}`,W-12*u,slot?HB+14*u:bar.y+bh/2,F(16),'#fff','#123e5e','right');if(slot)below=HB+24*u}
+ if(state=='fish'||state=='clear'){const k=CL(lb/target,0,1);g.fillStyle='rgba(0,0,0,.3)';rr(bar.x,bar.y,bar.w,bh,bh/2);g.fill();g.fillStyle=k>=1?'#7fe05a':'#ffb03a';rr(bar.x,bar.y,Math.max(bh,bar.w*k),bh,bh/2);g.fill();txt(`🐟 ${lb.toFixed(1)} / ${target} lb`,bar.x+bar.w/2,bar.y+bh/2,F(14),'#fff','#123e5e');
+  if(state=='fish'&&!card&&!wave){const hint=fight?'HOLD to reel in · LET GO when it goes red!':line.st=='idle'?'Swipe ➡ to CAST · tap to DROP the line':line.st=='water'?'HOLD to sink deeper · let go to reel up':'';
+   const a=hint?wtxt(hint,W/2,H-12*u-F(14)*.5,F(14),'#fff','#123e5e',W-16*DPR,'bottom'):{h:0};
+   wtxt(`🪙 ${coins} · 🧵 ${lineLb()} lb · 🎣 ${RODS[GEAR.rod|0].n}${lure?' · '+lure.e+' '+lure.n:''}`,W/2,H-12*u-a.h-F(12)*.6-2*u,F(12),'#fff','#123e5e',W-16*DPR,'bottom')}}
+ if(fight){const f=fight,x=wide?W*.36:W*.15,w=wide?W*.56:W*.7,y=below+10*u,th=Math.max(18*u,F(13)+4*DPR);g.fillStyle='rgba(0,0,0,.35)';rr(x-4*u,y-4*u,w+8*u,th+8*u,(th+8*u)/2);g.fill();const gr=g.createLinearGradient(x,0,x+w,0);gr.addColorStop(0,'#5ad0ff');gr.addColorStop(.6,'#7fe05a');gr.addColorStop(.85,'#ffd03a');gr.addColorStop(1,'#ff3a3a');g.fillStyle=gr;rr(x,y,w*CL(f.ten,0,1),th,th/2);g.fill();
+  g.fillStyle='rgba(255,255,255,.9)';g.fillRect(x+w*.85-1*u,y-3*u,2.5*u,th+6*u);txt(f.ten>.85?'⚠️ TOO TIGHT! LET GO!':f.run>0?'It\'s running! 🐟💨':`Tension ${Math.round(CL(f.ten,0,1)*100)}%`,x+w/2,y+th/2,F(13),'#fff','#123e5e');
+  const py=y+th+8*u;g.fillStyle='rgba(255,255,255,.3)';rr(x,py,w,8*u,4*u);g.fill();g.fillStyle='#fff';rr(x,py,w*CL(f.prog,0,1),8*u,4*u);g.fill();
+  wtxt(`🧵 ${lineLb()} lb line · pull ${Math.round(f.load||0)} lb`,x+w/2,py+8*u+4*u+F(12)*.6,F(12),f.load>lineLb()?'#ffb0b0':'#fff','#123e5e',Math.max(w,W*.6),'top')}
+ if(msgT>0)wtxt(msg,W/2,state=='drive'?Math.max(H*.3,HB+80*u):SY()+44*u,F(20),'#fff','#123e5e',W-24*DPR);
+ for(const p of pops)wtxt(p.s,p.x,p.y-p.t*.8*S,Math.max(p.sz*S,16*DPR),p.c,'#123e5e',W-16*DPR)}
+function panel(y,h){const pw=PW(),u=U();g.fillStyle='rgba(255,250,240,.94)';rr((W-pw)/2,y,pw,h,22*u);g.fill();g.strokeStyle='#1f8ac0';g.lineWidth=5*u;g.stroke()}
+function drawCard(){const cd=card,u=U(),art=96*u,ttl=cd.isNew?'✨ NEW CATCH! ✨':'Nice catch!';
+ if(cd.j){const p=panelT(H*.36,[[ttl,F(18),'#e05a3a'],[null,art],[cd.f.j.n+'!',F(22),'#123e5e'],['Junk: 0 lb · +15 cleanup points ♻️',F(14),'#2e8b57']]);drawJunk(cd.f.j.k,W/2,p.sp[0],u*2.2,Math.sin(t*.1)*.15)}
+ else{const p=panelT(H*.36,[[ttl,F(18),'#e05a3a'],[null,art],[cd.f.sp[0],F(22),'#123e5e'],[`${cd.f.wt.toFixed(1)} lb!  +${Math.round(cd.f.wt*10)} pts · 🪙${fishPrice(cd.f.sp,cd.f.wt)}`,F(17),'#1f8ac0']]);const L=Math.min(cd.f.len/S*u*1.4,PW()*.7,art*2.4);drawFish(cd.f.sp,W/2,p.sp[0],L,1,Math.sin(t*.15)*.08)}}
 function drawShop(){drawSide();const sy=SY(),x0=W*.05,w=Math.min(W*.42,190*S),hz=sy-2*S;
  g.fillStyle=area.sand;g.beginPath();g.ellipse(x0+w*.5,hz+2*S,w*.75,18*S,0,Math.PI,TAU);g.fill();
  const top=hz-110*S;g.fillStyle='#b07a4a';g.fillRect(x0,top+30*S,w,80*S);g.strokeStyle='#8a5a2a';g.lineWidth=2*S;for(let y=top+40*S;y<hz;y+=11*S){g.beginPath();g.moveTo(x0,y);g.lineTo(x0+w,y);g.stroke()}
@@ -377,17 +397,16 @@ function drawShop(){drawSide();const sy=SY(),x0=W*.05,w=Math.min(W*.42,190*S),hz
  jwoo(dx+dw*.35,hz-10*S,S*1.1,0);
  const bx=dx+dw*.72,by=sy+6*S+Math.sin(t*.05)*2*S;g.fillStyle='#a8d8ee';g.beginPath();g.moveTo(bx-44*S,by-8*S);g.lineTo(bx+48*S,by-8*S);g.quadraticCurveTo(bx+40*S,by+12*S,bx+26*S,by+13*S);g.lineTo(bx-36*S,by+13*S);g.quadraticCurveTo(bx-43*S,by+6*S,bx-44*S,by-8*S);g.fill();txt('J WOO',bx+4*S,by+5*S,8*S,'#1a5a8a');
  g.strokeStyle='#e8d8b0';g.lineWidth=2*S;g.beginPath();g.moveTo(bx-40*S,by-8*S);g.quadraticCurveTo(bx-50*S,hz+8*S,dx+dw*.62,hz-4*S);g.stroke();
- g.fillStyle='rgba(10,40,60,.45)';g.fillRect(0,0,W,40*S);txt(`🏪 ${area.n} Bait Shop`,12*S,20*S,15*S,'#fff','#123e5e','left')}
+ const shb=Math.max(40*S,F(15)+16*DPR);g.fillStyle='rgba(10,40,60,.45)';g.fillRect(0,0,W,shb);txt(`🏪 ${area.n} Bait Shop`,12*U(),shb/2,F(15),'#fff','#123e5e','left')}
 function draw(){g.save();if(shake)g.translate((R()-.5)*shake*S,(R()-.5)*shake*S);
  if(state=='shop')drawShop();else if(state=='drive'||state=='over')drawDrive();else fishScene();
  for(const p of parts)circ(p.x,p.y,p.r,p.c);g.restore();
  if(state=='shop'){if(paused){g.fillStyle='rgba(0,0,0,.45)';g.fillRect(0,0,W,H)}return}
- if(state=='title'){jwPortrait();txt("J Woo's",W/2,84*S,40*S,'#ffb03a','#123e5e');txt('Fishing Challenge',W/2,130*S,36*S,'#5ad0ff','#123e5e');const y=H*.47;panel(y,150*S);txt('🚤 Drive to the glowing buoy',W/2,y+24*S,15*S,'#123e5e');txt("🎣 Swipe to cast · hold to sink · reel 'em in!",W/2,y+48*S,15*S,'#123e5e');txt('🌊 Watch out for big waves!',W/2,y+72*S,15*S,'#123e5e');txt(`Best: ${best}`,W/2,y+96*S,15*S,'#e05a3a');
-  txt('Tap to start! 🎣',W/2,y+126*S,24*S+Math.sin(t*.1)*2*S,'#ffb03a','#123e5e');return}
+ if(state=='title'){jwPortrait();txt("J Woo's",W/2,84*S,40*S,'#ffb03a','#123e5e');txt('Fishing Challenge',W/2,130*S,36*S,'#5ad0ff','#123e5e');panelT(H*.47,[['🚤 Drive to the glowing buoy',F(15),'#123e5e',null,2],["🎣 Swipe to cast · hold to sink · reel 'em in!",F(15),'#123e5e',null,2],['🌊 Watch out for big waves!',F(15),'#123e5e',null,2],[`Best: ${best}`,F(15),'#e05a3a',null,6],['Tap to start! 🎣',F(24)+Math.sin(t*.1)*2*U(),'#ffb03a','#123e5e']]);return}
  hud();if(card)drawCard();
- if(state=='clear'){clearT++;const y=H*.3;panel(y,200*S);txt('🎉 Target reached! 🎉',W/2,y+34*S,24*S,'#e05a3a');txt(`${area.n} complete! +${100*level} bonus`,W/2,y+72*S,16*S,'#123e5e');txt(`Next: ${AREAS[level%6].n}${level%6==0?' (harder!)':''}`,W/2,y+104*S,18*S,'#1f8ac0');txt('+1 ❤️ boat patched up',W/2,y+134*S,14*S,'#2e8b57');txt(cooler.length?`🧊 ${cooler.length} fish in the cooler`:'Tap to sail on!',W/2,y+152*S,14*S,'#1f8ac0');txt('Tap to dock at the Bait Shop 🏪',W/2,y+180*S,19*S,'#ffb03a','#123e5e')}
- if(state=='over'){const y=H*.28;panel(y,210*S);txt('🛠️ Boat needs repairs!',W/2,y+36*S,24*S,'#e05a3a');txt(`Reached level ${level} · ${area.n}`,W/2,y+76*S,16*S,'#123e5e');txt(`Score ${score}   Best ${best}`,W/2,y+108*S,20*S,'#1f8ac0');if(overSold)txt(`🧊 Cooler sold: +${overSold} 🪙  (🪙 ${coins})`,W/2,y+138*S,14*S,'#2e8b57');txt('Tap to fish again! 🎣',W/2,y+170*S,20*S,'#ffb03a','#123e5e')}
- if(paused){g.fillStyle='rgba(0,0,0,.45)';g.fillRect(0,0,W,H);txt('Paused',W/2,H*.4,40*S,'#fff','#123e5e');txt('Tap ▶ to keep fishing',W/2,H*.4+46*S,18*S,'#fff','#123e5e')}}
+ if(state=='clear'){clearT++;panelT(H*.3,[['🎉 Target reached! 🎉',F(24),'#e05a3a',null,8],[`${area.n} complete! +${100*level} bonus`,F(16),'#123e5e'],[`Next: ${AREAS[level%6].n}${level%6==0?' (harder!)':''}`,F(18),'#1f8ac0'],['+1 ❤️ boat patched up',F(14),'#2e8b57',null,2],[cooler.length?`🧊 ${cooler.length} fish in the cooler`:'Tap to sail on!',F(14),'#1f8ac0',null,8],['Tap to dock at the Bait Shop 🏪',F(19),'#ffb03a','#123e5e']])}
+ if(state=='over'){const it=[['🛠️ Boat needs repairs!',F(24),'#e05a3a',null,8],[`Reached level ${level} · ${area.n}`,F(16),'#123e5e'],[`Score ${score}   Best ${best}`,F(20),'#1f8ac0']];if(overSold)it.push([`🧊 Cooler sold: +${overSold} 🪙  (🪙 ${coins})`,F(14),'#2e8b57']);it.push(['Tap to fish again! 🎣',F(20),'#ffb03a','#123e5e']);panelT(WIDE()?H*.2:H*.28,it)}
+ if(paused){g.fillStyle='rgba(0,0,0,.45)';g.fillRect(0,0,W,H);txt('Paused',W/2,H*.4,F(40),'#fff','#123e5e');wtxt('Tap ▶ to keep fishing',W/2,H*.4+46*U(),F(18),'#fff','#123e5e')}}
 // ---------- UI + input
 function ui(){$('shop').style.display=state=='shop'?'flex':'none';const play=state=='drive'||state=='fish'||state=='clear',menu=state=='title'||state=='over';$('pause').style.display=play?'block':'none';$('pause').textContent=paused?'▶':'⏸';$('mute').style.display='block';$('mute').textContent=muted?'🔇':'🔊';
  $('padt').style.display=state=='drive'?'block':'none';$('padt').style.opacity=padOn?1:.55;$('pad').style.display=state=='drive'&&padOn&&!paused?'flex':'none';
