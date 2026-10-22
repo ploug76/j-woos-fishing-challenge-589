@@ -11,18 +11,19 @@ canvas{display:block;position:fixed;left:0;top:0;width:100%;height:100%}
 #howb{bottom:150px;background:#2e8b57}#logb{bottom:96px;background:#e0a526}#inst{bottom:42px;background:#1f8ac0}
 #ios{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);display:none;z-index:4;background:#123e5e;color:#fff;padding:6px 12px;border-radius:12px;font-size:13px;text-align:center;width:80vw}
 #panel{position:fixed;inset:0;display:none;z-index:6;background:rgba(10,40,60,.6);align-items:center;justify-content:center}
-#pbox{background:#fffaf0;border:5px solid #1f8ac0;border-radius:20px;width:min(88vw,460px);max-height:78vh;overflow:auto;padding:14px 16px;color:#123e5e;font-size:15px;line-height:1.4;touch-action:pan-y}
+#pbox{background:#fffaf0;border:5px solid #1f8ac0;border-radius:20px;width:min(88vw,460px);max-height:78vh;overflow:auto;padding:14px 16px;color:#123e5e;font-size:16px;line-height:1.4;touch-action:pan-y}
 #pbox h2{margin:4px 0 8px;text-align:center;color:#e05a3a}#pbox h3{margin:10px 0 4px;color:#1f8ac0}
 #pbox .row{display:flex;justify-content:space-between;border-bottom:1px dashed #cde;padding:2px 0}
 #shop{position:fixed;left:50%;transform:translateX(-50%);top:37vh;bottom:calc(8px + env(safe-area-inset-bottom));width:min(94vw,470px);display:none;flex-direction:column;z-index:5;background:#fffaf0;border:5px solid #1f8ac0;border-radius:20px;box-sizing:border-box;color:#123e5e;font-size:15px;line-height:1.3;overflow:hidden}
 #shop .sh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px 4px}#shop .sh b{font-size:18px;color:#e05a3a}#shop .co{font-size:19px;font-weight:bold;color:#b07800;background:#fff2c0;border:2px solid #e0a526;border-radius:14px;padding:1px 10px}
-#shop .tabs{display:flex;gap:4px;padding:2px 8px}#shop .tabs button{flex:1;font:bold 14px inherit;font-family:inherit;padding:7px 2px;border-radius:12px 12px 0 0;border:2px solid #1f8ac0;border-bottom:0;background:#d8eef8;color:#123e5e}#shop .tabs button.on{background:#1f8ac0;color:#fff}
-#shop .lst{flex:1;overflow:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;border-top:3px solid #1f8ac0;padding:6px 10px}
-#shop .it{display:flex;align-items:center;gap:8px;border-bottom:1px dashed #cde;padding:6px 0}#shop .it .tx{flex:1;min-width:0}#shop .it .tx small{display:block;color:#4a6a80;font-size:12px}
-#shop .bb{font:bold 14px inherit;font-family:inherit;min-width:74px;min-height:38px;border-radius:19px;border:3px solid #fff;background:#2e8b57;color:#fff;box-shadow:0 0 0 2px #2e8b57;padding:0 8px}#shop .bb.y{background:#e0a526;box-shadow:0 0 0 2px #e0a526}#shop .bb:disabled{background:#9aa;box-shadow:0 0 0 2px #9aa}
-#shop .note{background:#fff2c0;border:2px dashed #e0a526;border-radius:12px;padding:6px 8px;margin:4px 0 6px;font-size:13px}
+#shop .tabs{display:flex;gap:4px;padding:2px 8px}#shop .tabs button{flex:1;min-width:0;min-height:48px;font-weight:bold;font-size:16px;font-family:inherit;line-height:1.1;padding:4px 1px;border-radius:12px 12px 0 0;border:2px solid #1f8ac0;border-bottom:0;background:#d8eef8;color:#123e5e}#shop .tabs button.on{background:#1f8ac0;color:#fff}
+#shop .lst{flex:1;overflow:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;border-top:3px solid #1f8ac0;padding:6px 10px;font-size:16px}
+#shop .it{display:flex;align-items:center;gap:8px;border-bottom:1px dashed #cde;padding:6px 0}#shop .it .tx{flex:1;min-width:0}#shop .it .tx small{display:block;color:#4a6a80;font-size:16px}#shop .grp{font-size:18px;font-weight:bold;color:#e05a3a;margin:8px 0 2px}
+#shop .bb{font-weight:bold;font-size:16px;font-family:inherit;min-width:78px;min-height:44px;border-radius:19px;border:3px solid #fff;background:#2e8b57;color:#fff;box-shadow:0 0 0 2px #2e8b57;padding:0 8px}#shop .bb.y{background:#e0a526;box-shadow:0 0 0 2px #e0a526}#shop .bb:disabled{background:#9aa;box-shadow:0 0 0 2px #9aa}
+#shop .note{background:#fff2c0;border:2px dashed #e0a526;border-radius:12px;padding:6px 8px;margin:4px 0 6px;font-size:16px}
 #shop .ft{display:flex;gap:6px;padding:8px}#shop .ft button{flex:1;font-size:18px;font-weight:bold;font-family:inherit;padding:10px 6px;border-radius:24px;border:3px solid #fff;color:#fff;background:#e05a3a;box-shadow:0 0 0 2px #e05a3a}#shop .ft button.sa{background:#1f8ac0;box-shadow:0 0 0 2px #1f8ac0}
-#shop .msg{min-height:18px;text-align:center;font-size:13px;color:#2e8b57;font-weight:bold;padding:0 8px}
+@media (max-height:520px){#shop{top:calc(6px + env(safe-area-inset-top));width:min(70vw,560px)}#shop .tabs br{display:none}#shop .tabs button{min-height:44px}}
+#shop .msg{min-height:20px;text-align:center;font-size:16px;color:#2e8b57;font-weight:bold;padding:0 8px}
 #pclose{display:block;margin:12px auto 2px;font-size:18px;font-weight:bold;font-family:inherit;padding:8px 26px;border-radius:24px;border:3px solid #fff;background:#e05a3a;color:#fff}
 </style><!--sample--><script>(()=>{try{const R=location.pathname.split('/')[1]||'',K='pa_sample:'+R,q=new URLSearchParams(location.search),v=q.get('sample');
 if(v==='0'||(!v&&/\/peters-arcade\//.test(document.referrer)))sessionStorage.removeItem(K);
@@ -36,7 +37,7 @@ addEventListener('beforeinstallprompt',e=>{e.preventDefault();e.stopImmediatePro
 <div id="pad"><button data-d="-1">◀</button><button data-d="1">▶</button></div>
 <button id="howb" class="mb">❓ How to Play</button><button id="logb" class="mb">📖 Catch Log</button><button id="inst" class="mb">📲 Install app</button>
 <div id="ios">On iPhone/iPad: tap Share ⬆ then “Add to Home Screen”</div>
-<div id="shop" role="dialog" aria-label="Bait Shop"><div class="sh"><b>🏪 Bait &amp; Tackle</b><span class="co" id="shCoins">🪙 0</span></div><div class="tabs" id="shTabs"><button data-t="sell">🐟 Sell</button><button data-t="line">🧵 Line</button><button data-t="rod">🎣 Rods</button><button data-t="lure">🪝 Lures</button></div><div class="lst" id="shList"></div><div class="msg" id="shMsg"></div><div class="ft"><button class="sa" id="shSail">⛵ Set sail!</button></div></div>
+<div id="shop" role="dialog" aria-label="Bait Shop"><div class="sh"><b>🏪 Bait &amp; Tackle</b><span class="co" id="shCoins">🪙 0</span></div><div class="tabs" id="shTabs"><button data-t="sell">🐟<br>Sell</button><button data-t="line">🧵<br>Line</button><button data-t="rod">🎣<br>Rods</button><button data-t="lure">🪝<br>Lures</button><button data-t="boat">🚤<br>Boats</button></div><div class="lst" id="shList"></div><div class="msg" id="shMsg"></div><div class="ft"><button class="sa" id="shSail">⛵ Set sail!</button></div></div>
 <div id="panel"><div id="pbox"><div id="ptext"></div><button id="pclose">OK!</button></div></div>
 <script>
 const c=document.getElementById('c'),g=c.getContext('2d'),$=id=>document.getElementById(id),R=Math.random,TAU=Math.PI*2,PICK=a=>a[Math.floor(R()*a.length)];
@@ -73,7 +74,14 @@ const LURES=[{id:'worm',n:'Worm',e:'🪱',d:'Free bait. Always in the tackle box
  {id:'roe',n:'Salmon Roe',e:'🔴',d:'Trout, Salmon & Char (River, Arctic). 1 round.',c:50,sp:['Rainbow Trout','Chinook Salmon','Arctic Char']},
  {id:'crab',n:'Crab Bait',e:'🦀',d:'Drum, Snapper, Grouper & Halibut. 1 round.',c:80,sp:['Sheepshead','Red Drum','Red Snapper','Goliath Grouper','Pacific Halibut']},
  {id:'squid',n:'Squid Strip',e:'🦑',d:'Tuna, Wahoo, Swordfish, Marlin & Shark. 1 round.',c:200,sp:['Yellowfin Tuna','Wahoo','Swordfish','Blue Marlin','Greenland Shark']}];
-let GEAR={line:0,rod:0,lures:{},equip:'worm'};try{Object.assign(GEAR,JSON.parse(localStorage.getItem('jwfGear')||'{}'))}catch(e){}if(!GEAR.lures||typeof GEAR.lures!='object')GEAR.lures={};
+// boats (handle rough water) + motors (push through current): power = boat.p + motor.p. Deep spot in area N needs power N (cycle 2+: still capped at 6)
+const BOATS=[{n:'Little Jon Boat',p:0,c:0,d:'Calm water only.',col:'#a8d8ee'},{n:'Aluminum V-Hull',p:1,c:240,d:'Cuts through small chop.',col:'#c8ccd2'},{n:'Bay Boat',p:2,c:900,d:'Rides over rough bay waves.',col:'#f0c060'},{n:'Offshore Cruiser',p:3,c:3200,d:'Built for big open-ocean swells.',col:'#ff8a5a'}];
+const MOTORS=[{n:'Trolling Motor',p:0,c:0,d:'Gentle and quiet.'},{n:'25 hp Outboard',p:1,c:180,d:'Beats a light current.'},{n:'90 hp Outboard',p:2,c:700,d:'Pushes through strong river current.'},{n:'Twin 250s',p:3,c:2800,d:'Muscles through any rip current.'}];
+const DEEP={rare:2.5,big:1.6,wt:1.25};
+let GEAR={line:0,rod:0,lures:{},equip:'worm',boat:0,motor:0};try{Object.assign(GEAR,JSON.parse(localStorage.getItem('jwfGear')||'{}'))}catch(e){}if(!GEAR.lures||typeof GEAR.lures!='object')GEAR.lures={};
+GEAR.boat=Math.max(0,Math.min(BOATS.length-1,GEAR.boat|0));GEAR.motor=Math.max(0,Math.min(MOTORS.length-1,GEAR.motor|0));
+const boatPow=()=>BOATS[GEAR.boat|0].p+MOTORS[GEAR.motor|0].p,deepNeed=()=>Math.min(6,ai+1);
+let deep=null,deepRun=false,deepBump=0;
 let coins=Math.max(0,Math.floor(+localStorage.getItem('jwfCoins')||0)),cooler=[],lure=null,wanted=null,shopTab='sell',snaps=0,overSold=0;
 function saveGear(){try{localStorage.setItem('jwfGear',JSON.stringify(GEAR));localStorage.setItem('jwfCoins',String(coins))}catch(e){}}
 const lineLb=()=>LINES[CL(GEAR.line|0,0,LINES.length-1)].lb,reelK=()=>RODS[CL(GEAR.rod|0,0,RODS.length-1)].r;
@@ -114,15 +122,17 @@ function startLevel(lv){level=lv;ai=(lv-1)%6;area=AREAS[ai];cyc=Math.floor((lv-1
    obs.push(o)}
   if(R()<.6)decor.push({d:d+gap*.5,x:l+R()*(r-l),k:area.dec,ph:R()*TAU});
   d+=gap*(.7+R()*.6)}
- placeSpot(total);state='drive';say(`Level ${lv}: ${area.n}`,160);ui()}
+ placeSpot(total);deepRun=false;deepBump=0;placeDeep(total-560*S);state='drive';say(`Level ${lv}: ${area.n}`,160);ui()}
+function placeDeep(d){const[l,r]=banks(d),left=R()<.5;deep={d,x:left?l+66*S:r-66*S,r:44*S,zx:110*S,zy:190*S,need:deepNeed()};
+ obs=obs.filter(o=>((o.x-deep.x)/(deep.zx+40*S))**2+((o.d-deep.d)/(deep.zy+40*S))**2>1);decor=decor.filter(o=>Math.abs(o.d-deep.d)>deep.zy||Math.abs(o.x-deep.x)>deep.zx)}
 function placeSpot(d){const[l,r]=banks(d);spot={d,x:l+60*S+R()*Math.max(1,r-l-120*S),r:54*S}}
 function banks(d){const a=area,k=d/S,am=a.bw>.05?1:.2;return[W*a.bw+W*am*(.05*Math.sin(k*.004+1)+.025*Math.sin(k*.013)),W-(W*a.bw+W*am*(.05*Math.sin(k*.0035+4)+.025*Math.sin(k*.011+2)))]}
 function enterFish(){state='fish';lb=0;useLure();target=Math.round(area.t*(1+.6*cyc));fishes=[];junks=[];for(let i=0;i<6;i++)spawnFish(true);if(R()<.6)spawnJunk();
- line={st:'idle',x:0,y:0,auto:0};fight=null;card=null;wave=null;waveT=waveGap()*.8;rock=0;spawnT=60;SND.arrive();say(`Catch ${target} lb of fish!`+(lure?` · ${lure.e} ${lure.n}`:''),150);ui()}
+ line={st:'idle',x:0,y:0,auto:0};fight=null;card=null;wave=null;waveT=waveGap()*.8;rock=0;spawnT=60;SND.arrive();say(deepRun?`🌊 Deep spot! Catch ${target} lb!`:`Catch ${target} lb of fish!`+(lure?` · ${lure.e} ${lure.n}`:''),150);ui()}
 function waveGap(){return Math.max(420,1700-140*(level-1))*(.7+R()*.6)}
 function areaMax(){return Math.max(...area.fish.map(f=>f[2]))*(1+.3*cyc)}
-function spawnFish(on){const L=area.fish,lu=state=='fish'?lure:null,ws=L.map((f,i)=>f[5]*(i>=3?1+.5*cyc:1)*(lu&&lu.rare&&i>=3?lu.rare:1)*(lu&&lu.sp&&lu.sp.includes(f[0])?8:1));let r=R()*ws.reduce((a,b)=>a+b),i=0;while(r>ws[i]){r-=ws[i];i++}
- const sp=L[i],wt=(sp[1]+(sp[2]-sp[1])*Math.pow(R(),1.8/(lu&&lu.big||1)))*(1+.3*cyc),len=Math.min(140,30+13*Math.cbrt(wt))*S*(sp[8]=='tiny'?.8:1),dep=sp[3]+R()*(sp[4]-sp[3]),y=SY()+34*S+dep*(BOT()-SY()-64*S),dir=R()<.5?1:-1;
+function spawnFish(on){const L=area.fish,lu=state=='fish'?lure:null,dp=deepRun&&state=='fish',ws=L.map((f,i)=>f[5]*(i>=3?1+.5*cyc:1)*(dp&&i>=3?DEEP.rare:1)*(lu&&lu.rare&&i>=3?lu.rare:1)*(lu&&lu.sp&&lu.sp.includes(f[0])?8:1));let r=R()*ws.reduce((a,b)=>a+b),i=0;while(r>ws[i]){r-=ws[i];i++}
+ const sp=L[i],wt=(sp[1]+(sp[2]-sp[1])*Math.pow(R(),1.8/(lu&&lu.big||1)/(dp?DEEP.big:1)))*(1+.3*cyc)*(dp?DEEP.wt:1),len=Math.min(140,30+13*Math.cbrt(wt))*S*(sp[8]=='tiny'?.8:1),dep=LERP(sp[3]+R()*(sp[4]-sp[3]),1,dp?.35:0),y=SY()+34*S+dep*(BOT()-SY()-64*S),dir=R()<.5?1:-1;
  fishes.push({sp,wt:Math.round(wt*10)/10,len,y,by:y,x:on?W*.3+R()*W*.65:(dir>0?-len-20*S:W+len+20*S),dir,v:(.5+R()*.6)*sp[9]*(1+.04*Math.min(level,15))*S,ph:R()*TAU,cd:0})}
 function spawnJunk(){const dir=R()<.5?1:-1;junks.push({j:PICK(JUNK),x:dir>0?-30*S:W+30*S,y:BOT()-(14+R()*40)*S,vx:dir*.3*S,ph:R()*TAU})}
 function tip(){const by=SY()+Math.sin(t*.05)*3*S+Math.sin(t*.25)*rock*16*S;return{x:BX()+72*S,y:by-112*S}}
@@ -154,6 +164,14 @@ function updDrive(){const v=(3.4+.18*Math.min(level,12))*S*(arriveT?Math.max(0,1
   if(inv>0||arriveT)continue;const ox=o.x+(o.ox||0);let dd;
   if(o.ty=='log')dd=Math.hypot(boat.x-CL(boat.x,ox-o.L/2,ox+o.L/2),dist-o.d);else dd=Math.hypot(boat.x-ox,dist-o.d);
   if(dd<o.r+13*S){hearts--;inv=90;shake=14;SND.crash();burst(boat.x,BY(),16,['#fff','#cdefff','#8a6a3a']);pop('Bonk! -❤️',boat.x,BY()-40*S,'#ff5a5a',26);boat.tx+=(boat.x<ox?-1:1)*45*S;if(hearts<=0){gameOver();return}}}
+ if(deep&&!arriveT){const ez=((boat.x-deep.x)/deep.zx)**2+((dist-deep.d)/deep.zy)**2;if(deepBump>0)deepBump--;
+  if(ez<1){const pw=boatPow(),ok=pw>=deep.need,away=boat.x<deep.x?-1:1,f=1-ez;
+   // current shoves the boat away from the deep hole; enough boat+motor power rides through it
+   boat.tx+=away*(ok?.6:2.6+1.4*(deep.need-pw))*S*f;if(!ok)boat.tx+=Math.sin(t*.5)*1.5*S;
+   const dd=Math.hypot(boat.x-deep.x,dist-deep.d);
+   if(!ok&&dd<deep.r+16*S){boat.x=deep.x+away*(deep.r+16*S);boat.tx=boat.x+away*40*S;shake=6;if(!deepBump){deepBump=90;SND.junk();say(`🌊 Too rough! Need 🚤 Power ${deep.need}`,150)}}
+   else if(ok&&dd<deep.r){arriveT=1;deepRun=true;spot={d:deep.d,x:deep.x,r:deep.r};deep=null;pop('Deep spot! 🌊🎣',boat.x,BY()-60*S,'#7fffd0',26)}}
+  else if(deep&&dist-deep.d>deep.zy)deep=null}
  if(!arriveT&&Math.hypot(boat.x-spot.x,dist-spot.d)<spot.r){arriveT=1;pop('Fishing spot! 🎣',spot.x,BY()-60*S,'#ffe14a',26)}
  else if(!arriveT&&dist-spot.d>100*S){placeSpot(dist+650*S);say('Missed the spot! Circling back… 🔄',120)}
  if(arriveT&&++arriveT>45)enterFish()}
@@ -237,8 +255,8 @@ function sideBoat(t0){const bx=BX(),by=SY()+Math.sin(t0*.05)*3*S+Math.sin(t0*.25
  g.fillStyle='#d2d9de';g.fillRect(bx-64*S,by-14*S,134*S,4*S);g.fillStyle='#86bdd8';g.fillRect(bx-62*S,by-3*S,128*S,3*S);for(let i=0;i<9;i++)circ(bx-50*S+i*13*S,by+14*S,1.1*S,'#7fb0c8');txt('J WOO',bx+6*S,by+9*S,10*S,'#1a5a8a');g.fillStyle='#555';rr(bx-76*S,by-22*S,14*S,26*S,4*S);g.fill();g.fillStyle='#333';g.fillRect(bx-72*S,by+4*S,5*S,16*S);
  g.restore();return{x:tp.x,y:tp.y}}
 function topBoat(x,y,a,s){g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba(0,0,0,.15)';g.beginPath();g.ellipse(3*s,5*s,16*s,30*s,0,0,TAU);g.fill();
- g.fillStyle='#a8d8ee';g.beginPath();g.moveTo(0,-32*s);g.quadraticCurveTo(17*s,-12*s,15*s,24*s);g.lineTo(-15*s,24*s);g.quadraticCurveTo(-17*s,-12*s,0,-32*s);g.fill();g.strokeStyle='#e4eaee';g.lineWidth=3*s;g.stroke();g.strokeStyle='#6f8796';g.lineWidth=1.2*s;g.stroke();
- g.fillStyle='#555';rr(-6*s,22*s,12*s,9*s,3*s);g.fill();g.fillStyle='#8fd0ff';g.beginPath();g.moveTo(-10*s,-12*s);g.quadraticCurveTo(0,-20*s,10*s,-12*s);g.lineTo(9*s,-8*s);g.lineTo(-9*s,-8*s);g.fill();
+ g.fillStyle=BOATS[GEAR.boat|0].col;g.beginPath();g.moveTo(0,-32*s);g.quadraticCurveTo(17*s,-12*s,15*s,24*s);g.lineTo(-15*s,24*s);g.quadraticCurveTo(-17*s,-12*s,0,-32*s);g.fill();g.strokeStyle='#e4eaee';g.lineWidth=3*s;g.stroke();g.strokeStyle='#6f8796';g.lineWidth=1.2*s;g.stroke();
+ g.fillStyle='#555';const mw=(12+3*(GEAR.motor|0))*s;rr(-mw/2,22*s,mw,(9+2*(GEAR.motor|0))*s,3*s);g.fill();if((GEAR.motor|0)>=3){rr(-mw/2-8*s,22*s,7*s,13*s,3*s);g.fill()}g.fillStyle='#8fd0ff';g.beginPath();g.moveTo(-10*s,-12*s);g.quadraticCurveTo(0,-20*s,10*s,-12*s);g.lineTo(9*s,-8*s);g.lineTo(-9*s,-8*s);g.fill();
  circ(0,5*s,13*s,'#8c8660');g.save();g.translate(0,5*s);camo(['#6e6a45','#b5ab7e'],[-8,-6,3,7,3,3,-3,9,2.5],s);circ(0,0,8.5*s,'#a49c70');camo(['#57532f','#c4b98a','#6e6a45'],[-3,-3,3,3,2,2.5,-2,4,2],s);g.restore();g.strokeStyle='#6a6545';g.lineWidth=2*s;g.beginPath();g.arc(0,5*s,8.5*s,0,TAU);g.stroke();g.strokeStyle='#5a3a1a';g.lineWidth=2*s;g.beginPath();g.moveTo(8*s,8*s);g.lineTo(20*s,-16*s);g.stroke();g.restore()}
 function drawFish(sp,x,y,L,dir,wig){g.save();g.translate(x,y);g.scale(dir,1);g.rotate(wig||0);const sh=sp[8],pat=sp[10],h=L*(sh=='round'?.62:sh=='flat'?.34:sh=='long'||sh=='bill'?.26:sh=='shark'?.3:sh=='tiny'?.55:.4);
  g.fillStyle=sp[7];if(sh=='tiny'||pat=='stripe'&&sp[7]=='#ffffff')g.fillStyle=sp[6];g.beginPath();g.moveTo(-L*.38,0);g.lineTo(-L*.62,-h*.6);g.lineTo(-L*.54,0);g.lineTo(-L*.62,h*.6);g.closePath();g.fill();
@@ -311,6 +329,14 @@ function drawDrive(){const a=area,by=BY();g.fillStyle=a.w1;g.fillRect(0,0,W,H);
   if(o.k=='lily'){circ(o.x,y,10*S,'#3fa04a');circ(o.x+12*S,y+6*S,7*S,'#4fb04a');circ(o.x+3*S,y-3*S,3*S,'#ff9fd0')}else if(o.k=='leaf'){g.fillStyle='#e0a030';g.beginPath();g.ellipse(o.x,y,7*S,3.5*S,o.ph,0,TAU);g.fill()}
   else if(o.k=='gull'){txt('🐦',o.x,y,20*S,'#fff')}else if(o.k=='reef'){circ(o.x,y,10*S,'rgba(255,120,170,.4)');circ(o.x+9*S,y+5*S,7*S,'rgba(255,180,80,.4)')}
   else if(o.k=='fin'){g.fillStyle='#3a5a7a';g.beginPath();g.moveTo(o.x,y-12*S);g.lineTo(o.x+10*S,y+4*S);g.lineTo(o.x-6*S,y+4*S);g.fill()}else{g.fillStyle='#f4faff';g.fillRect(o.x,y,10*S,7*S)}}
+ if(deep){const zy=by-(deep.d-dist),ok=boatPow()>=deep.need,FS=n=>Math.max(n*S,16*DPR);
+  if(zy>-deep.zy-40*S&&zy<H+deep.zy+40*S){g.save();g.beginPath();g.ellipse(deep.x,zy,deep.zx,deep.zy,0,0,TAU);g.fillStyle='rgba(8,40,90,.38)';g.fill();g.clip();
+   g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=2.5*S;const away=deep.x<W/2?-1:1;
+   for(let i=0;i<14;i++){const yy=zy-deep.zy+((i*29*S+t*2.2*S)%(deep.zy*2)),xx=deep.x+Math.sin(i*2.7)*deep.zx*.75,ph=(t*.15+i)%TAU;g.beginPath();g.arc(xx,yy,6*S,Math.PI*1.1+Math.sin(ph)*.2,Math.PI*1.9);g.stroke()}
+   g.strokeStyle='rgba(180,240,255,.85)';g.lineWidth=3*S;const cd=-away;for(let i=0;i<5;i++){const yy=zy-deep.zy*.8+i*deep.zy*.4,xs=deep.x-cd*deep.zx*.8+cd*((t*2.5*S+i*47*S)%(deep.zx*1.6)),xe=xs+cd*14*S;g.beginPath();g.moveTo(xs,yy);g.lineTo(xe,yy);g.lineTo(xe-cd*6*S,yy-5*S);g.moveTo(xe,yy);g.lineTo(xe-cd*6*S,yy+5*S);g.stroke()}
+   g.restore();const pr=deep.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(0,20,60,.55)';g.beginPath();g.arc(deep.x,zy,pr,0,TAU);g.fill();g.strokeStyle=ok?'rgba(120,255,210,.95)':'rgba(255,120,120,.95)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
+   txt('🌊🎣',deep.x,zy-4*S,FS(20),'#fff');const lx=CL(deep.x,70*S,W-70*S);txt(ok?'DEEP SPOT':`DEEP · need 🚤${deep.need}`,lx,zy+deep.r+16*S,FS(17),ok?'#7fffd0':'#ffd0d0','#04163a')}
+  else if(zy<-deep.zy-40*S&&zy>-2000*S){const lx=CL(deep.x,60*S,W-60*S);txt(ok?'🌊 Deep spot ahead':`🌊 Deep spot · need 🚤${deep.need}`,lx,150*S,FS(16),ok?'#7fffd0':'#ffd0d0','#04163a')}}
  // spot
  const spy=by-(spot.d-dist);if(spy>-80*S&&spy<H+80*S){const pr=spot.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(255,240,120,.25)';g.beginPath();g.arc(spot.x,spy,pr,0,TAU);g.fill();g.strokeStyle='rgba(255,240,120,.9)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
   circ(spot.x,spy,12*S,'#ff4a4a');g.fillStyle='#fff';g.fillRect(spot.x-12*S,spy-3*S,24*S,6*S);txt('🎣',spot.x,spy-26*S,22*S,'#fff')}
@@ -324,7 +350,7 @@ function drawDrive(){const a=area,by=BY();g.fillStyle=a.w1;g.fillRect(0,0,W,H);
   else{g.fillStyle='#b07a3a';g.fillRect(x-o.r,y-o.r,o.r*2,o.r*2);g.strokeStyle='#6a4a1a';g.lineWidth=2*S;g.strokeRect(x-o.r,y-o.r,o.r*2,o.r*2);g.beginPath();g.moveTo(x-o.r,y-o.r);g.lineTo(x+o.r,y+o.r);g.stroke()}}
  for(const w of wake){const y=by-(w.d-dist);g.strokeStyle=`rgba(255,255,255,${w.a*.7})`;g.lineWidth=3*S;const sp=(1-w.a)*30*S+8*S;g.beginPath();g.moveTo(w.x-sp,y+4*S);g.lineTo(w.x-sp-4*S,y+8*S);g.moveTo(w.x+sp,y+4*S);g.lineTo(w.x+sp+4*S,y+8*S);g.stroke()}
  if(!(inv>0&&t%10<5))topBoat(boat.x,by,boat.ang,S);
- const k=CL(dist/spot.d,0,1);g.fillStyle='rgba(0,0,0,.25)';rr(14*S,66*S,W*.5,14*S,7*S);g.fill();g.fillStyle='#ffe14a';rr(14*S,66*S,Math.max(14*S,W*.5*k),14*S,7*S);g.fill();txt('🚤',14*S+W*.5*k,73*S,16*S,'#fff');txt('🎣',W*.5+26*S,73*S,16*S,'#fff')}
+ const k=CL(dist/spot.d,0,1);g.fillStyle='rgba(0,0,0,.25)';rr(14*S,66*S,W*.5,14*S,7*S);g.fill();g.fillStyle='#ffe14a';rr(14*S,66*S,Math.max(14*S,W*.5*k),14*S,7*S);g.fill();txt('🚤',14*S+W*.5*k,73*S,16*S,'#fff');txt('🎣',W*.5+26*S,73*S,16*S,'#fff');txt(`🚤 Power ${boatPow()}`,W-12*S,73*S,Math.max(16*S,16*DPR),'#fff','#123e5e','right')}
 // ---------- HUD / overlays
 function hud(){g.fillStyle='rgba(10,40,60,.45)';g.fillRect(0,0,W,58*S);txt('❤️'.repeat(Math.max(0,hearts))+'🤍'.repeat(Math.max(0,3-hearts)),10*S,18*S,17*S,'#fff',null,'left');txt(`Lv ${level} · ${area.n}`,10*S,42*S,15*S,'#fff','#123e5e','left');
  txt(`Score ${score}`,W*.5,18*S,15*S,'#ffe14a','#123e5e');txt(`Best ${best}`,W*.5,40*S,12*S,'#fff','#123e5e');
@@ -386,6 +412,7 @@ $('howb').onclick=e=>{e.stopPropagation();showPanel(`<h2>How to Play 🎣</h2><p
 <p><b>🌊 Big waves:</b> When you see the warning, land your fish fast. The wave resets your line and steals any hooked fish. Waves come more often later.</p>
 <p><b>🧵 Tension:</b> Big fish pull hard, and harder when they run. Reeling against a pulling fish raises the tension bar. Past the white mark it's red, and at 100% the line SNAPS and the fish escapes. Stronger line holds bigger fish.</p>
 <p><b>🏪 Bait Shop:</b> After every area J Woo docks at the bait shop. Sell your catch for 🪙 coins (rare and big fish pay more, and the shop pays 2× for its “wanted” fish). Coins are saved on this phone. Buy <b>🧵 Line</b> (holds heavier fish), <b>🎣 Rods &amp; Reels</b> (reel in faster) and <b>🪝 Lures</b> (bigger, rarer or certain fish; most last one round). Pick a lure, then set sail! If the boat sinks, your cooler is sold for you.</p>
+<p><b>🚤 Boats &amp; Motors:</b> Each area has a dark <b>🌊 deep spot</b> in rough water, off to one side before the regular buoy. A strong current pushes small boats away. Buy better <b>boats</b> and <b>motors</b> in the shop's 🚤 Boats tab to raise your 🚤 Power (Lake needs 1, River 2, Bay 3, Reef 4, Deep Sea 5, Arctic 6). With enough power, steer into the deep spot to fish for bigger, rarer fish. Upgrades are saved on this phone.</p>
 <p><b>🗺️ Six areas:</b> Lake → River → Bay → Coral Reef → Deep Sea → Arctic, then around again with bigger fish and bigger targets.</p><p>Keys: ←/→ steer · → or C cast · Space/↓ drop, sink & reel · P pause</p>`)};
 $('logb').onclick=e=>{e.stopPropagation();let h='<h2>📖 Catch Log</h2>',tot=0,got=0;for(const a of AREAS){h+=`<h3>${a.n}</h3>`;for(const f of a.fish){tot++;const L=LOG[f[0]];if(L&&L.n){got++;h+=`<div class="row"><span>🐟 ${f[0]} ×${L.n}</span><span>best ${L.b.toFixed(1)} lb</span></div>`}else h+=`<div class="row"><span>❓ ???</span><span>${f[0].length>0?'not caught yet':''}</span></div>`}}
  h+='<h3>Junk ♻️</h3>';for(const j of JUNK){const L=LOG[j.n];h+=L&&L.n?`<div class="row"><span>${j.n}</span><span>×${L.n}</span></div>`:'<div class="row"><span>❓ ???</span><span></span></div>'}showPanel(h.replace('<h2>📖 Catch Log</h2>',`<h2>📖 Catch Log</h2><p style="text-align:center">${got} / ${tot} species caught</p>`))};
@@ -395,9 +422,11 @@ function openShop(){state='shop';fight=null;card=null;wave=null;line={st:'idle',
 function priceOf(c){return c.v*(c.n==wanted?2:1)}
 function sell(i){const c=cooler[i];if(!c)return;const v=priceOf(c);coins+=v;cooler.splice(i,1);saveGear();SND.catch();shopMsg(`Sold ${c.n} for ${v} 🪙`);renderShop()}
 function sellAll(){if(!cooler.length)return;const v=cooler.reduce((a,c)=>a+priceOf(c),0),n=cooler.length;coins+=v;cooler=[];saveGear();SND.clear();shopMsg(`Sold ${n} fish for ${v} 🪙!`);renderShop()}
-function buy(kind,i){const L=kind=='line'?LINES:kind=='rod'?RODS:LURES,it=L[i];if(!it||coins<it.c){shopMsg('Not enough coins yet. Catch and sell more fish!');return}
+function buy(kind,i){if(kind=='boat'||kind=='motor')return buyBoat(kind,i);const L=kind=='line'?LINES:kind=='rod'?RODS:LURES,it=L[i];if(!it||coins<it.c){shopMsg('Not enough coins yet. Catch and sell more fish!');return}
  if(kind=='line'){if(i<=(GEAR.line|0))return;GEAR.line=i}else if(kind=='rod'){if(i<=(GEAR.rod|0))return;GEAR.rod=i}else{if(it.perm&&(GEAR.lures[it.id]|0)>0)return;GEAR.lures[it.id]=(GEAR.lures[it.id]|0)+1;GEAR.equip=it.id}
  coins-=it.c;saveGear();SND.catch();shopMsg(kind=='lure'?`Bought ${it.n}! It's on your hook for the next round.`:`Upgraded to ${it.n}!`);renderShop()}
+function buyBoat(kind,i){const L=kind=='boat'?BOATS:MOTORS,it=L[i];if(!it||i<=(GEAR[kind]|0))return;if(coins<it.c){shopMsg('Not enough coins yet. Catch and sell more fish!');return}
+ GEAR[kind]=i;coins-=it.c;saveGear();SND.catch();shopMsg(`Upgraded to ${it.n}! 🚤 Power is now ${boatPow()}.`);renderShop()}
 function equip(id){GEAR.equip=id;saveGear();SND.click();shopMsg('Lure ready for next round: '+(LURES.find(x=>x.id==id)||LURES[0]).n);renderShop()}
 function sail(){if(state!='shop')return;startLevel(level+1);SND.start()}
 const maxFish=lb=>Math.round(lb/.42*.95);
@@ -411,6 +440,11 @@ function renderShop(){$('shCoins').textContent='🪙 '+coins;document.querySelec
   LINES.forEach((L,i)=>{const own=i<=(GEAR.line|0);h+=it('🧵',`<b>${L.n}</b> · ${L.lb} lb test`,`Holds fish up to about ${maxFish(L.lb)} lb (let go when big ones run!)`,i==(GEAR.line|0)?'<button class="bb" disabled>✔ Using</button>':own?'<button class="bb" disabled>Owned</button>':`<button class="bb${coins>=L.c?'':' no'}" data-a="buy" data-k="line" data-i="${i}" ${coins>=L.c?'':'disabled'}>${L.c}🪙</button>`)})}
  else if(shopTab=='rod'){h+=`<div class="note">Faster reels pull fish in quicker. Now: <b>${RODS[GEAR.rod|0].n}</b>.</div>`;
   RODS.forEach((L,i)=>{const own=i<=(GEAR.rod|0);h+=it('🎣',`<b>${L.n}</b>`,`Reel speed ×${L.r}`,i==(GEAR.rod|0)?'<button class="bb" disabled>✔ Using</button>':own?'<button class="bb" disabled>Owned</button>':`<button class="bb" data-a="buy" data-k="rod" data-i="${i}" ${coins>=L.c?'':'disabled'}>${L.c}🪙</button>`)})}
+ else if(shopTab=='boat'){const pw=boatPow(),nx=AREAS[level%6],nd=Math.min(6,level%6+1);
+  h+=`<div class="note">🌊 Every area has a <b>deep spot</b> in rough water with a strong current. Bigger, rarer fish live there. Boat + motor = <b>🚤 Power ${pw}</b>. ${nx.n} deep spot needs <b>${nd}</b>${pw>=nd?' ✅':''}.</div>`;
+  const row=(kind,L)=>L.forEach((B,i)=>{const cur=GEAR[kind]|0;h+=it(kind=='boat'?'🚤':'⚙️',`<b>${B.n}</b> · +${B.p} power`,B.d,i==cur?'<button class="bb" disabled>✔ Using</button>':i<cur?'<button class="bb" disabled>Owned</button>':`<button class="bb" data-a="buy" data-k="${kind}" data-i="${i}" ${coins>=B.c?'':'disabled'}>${B.c}🪙</button>`)});
+  h+='<div class="grp">🚤 Boats (rough water)</div>';row('boat',BOATS);h+='<div class="grp">⚙️ Motors (current)</div>';row('motor',MOTORS);
+  h+=`<div class="note">Deep spots: Lake 1 · River 2 · Bay 3 · Reef 4 · Deep Sea 5 · Arctic 6</div>`}
  else{h+=`<div class="note">Pick the lure for your next round. On the hook: <b>${(LURES.find(x=>x.id==GEAR.equip)||LURES[0]).n}</b>.</div>`;
   LURES.forEach((L,i)=>{const n=GEAR.lures[L.id]|0,has=L.id=='worm'||n>0,on=GEAR.equip==L.id;let b='';
    if(L.perm)b=n>0?(on?'<button class="bb" disabled>✔ On hook</button>':`<button class="bb y" data-a="eq" data-id="${L.id}">Use</button>`):`<button class="bb" data-a="buy" data-k="lure" data-i="${i}" ${coins>=L.c?'':'disabled'}>${L.c}🪙</button>`;
