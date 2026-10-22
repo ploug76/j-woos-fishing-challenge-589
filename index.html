@@ -109,7 +109,7 @@ function pop(s,x,y,col,sz){pops.push({s,x,y,c:col||'#fff',t:0,sz:sz||22})}
 function burst(x,y,n,cols,sp){for(let i=0;i<n;i++){const a=R()*TAU,v=(1+R()*3)*S*(sp||1);parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1.5*S,l:30+R()*30,c:PICK(cols),r:(2+R()*3)*S})}}
 function say(m,d){msg=m;msgT=d||120}
 // UI scale: never smaller than 16 CSS px text (S alone shrinks to ~8px in landscape)
-const U=()=>Math.max(S,DPR*16/14.5),F=n=>Math.max(n*U(),16*DPR),WIDE=()=>W>H&&W/DPR>=560,PW=()=>WIDE()?Math.min(W*.88,480*DPR,W-360*DPR):W*.88;
+const U=()=>Math.max(S,DPR*16/14.5),F=n=>Math.max(n*U(),16*DPR),WIDE=()=>W>H&&W/DPR>=560,PW=()=>WIDE()?Math.min(W*.88,480*DPR,W-410*DPR):W*.88;
 function wrapL(s,sz,mw){g.font=`bold ${sz}px "Comic Sans MS","Chalkboard SE","Trebuchet MS",sans-serif`;if(g.measureText(s).width<=mw)return[s];const L=[];let cur='';for(const x of String(s).split(' ')){const tr=cur?cur+' '+x:x;if(cur&&g.measureText(tr).width>mw){L.push(cur);cur=x}else cur=tr}if(cur)L.push(cur);return L}
 function wtxt(s,x,y,sz,fill,stroke,mw,va){const L=wrapL(s,sz,mw||W-24*DPR),lh=sz*1.18;let w=0;for(const l of L)w=Math.max(w,g.measureText(l).width);const y0=va=='bottom'?y-(L.length-1)*lh:va=='top'?y:y-(L.length-1)*lh/2;
  const xx=CL(x,w/2+8*DPR,Math.max(w/2+8*DPR,W-w/2-8*DPR));L.forEach((l,i)=>txt(l,xx,y0+i*lh,sz,fill,stroke));return{n:L.length,h:L.length*lh,w}}
