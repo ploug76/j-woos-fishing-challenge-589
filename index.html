@@ -81,6 +81,10 @@ const DEEP={rare:2.5,big:1.6,wt:1.25};
 let GEAR={line:0,rod:0,lures:{},equip:'worm',boat:0,motor:0};try{Object.assign(GEAR,JSON.parse(localStorage.getItem('jwfGear')||'{}'))}catch(e){}if(!GEAR.lures||typeof GEAR.lures!='object')GEAR.lures={};
 GEAR.boat=Math.max(0,Math.min(BOATS.length-1,GEAR.boat|0));GEAR.motor=Math.max(0,Math.min(MOTORS.length-1,GEAR.motor|0));
 const boatPow=()=>BOATS[GEAR.boat|0].p+MOTORS[GEAR.motor|0].p,deepNeed=()=>Math.min(6,ai+1);
+const BSH=['jon boat','V-Hull boat','Bay Boat','Offshore Cruiser'],MSH=['trolling motor','25 hp motor','90 hp motor','Twin 250s'];
+// cheapest upgrade(s) from current gear that reach the needed power, e.g. 'a 25 hp motor' or 'Bay Boat + 90 hp motor'
+function needGear(need){const b0=GEAR.boat|0,m0=GEAR.motor|0;let best=null;for(let b=b0;b<BOATS.length;b++)for(let m=m0;m<MOTORS.length;m++){if(BOATS[b].p+MOTORS[m].p<need)continue;const c=(b>b0?BOATS[b].c:0)+(m>m0?MOTORS[m].c:0);if(!best||c<best.c)best={b,m,c}}
+ if(!best)return 'more 🚤 Power';const nb=best.b>b0,nm=best.m>m0;return nb&&nm?BSH[best.b]+' + '+MSH[best.m]:nm?(best.m==1?'a ':'')+MSH[best.m]:(best.b==1?'a ':'')+BSH[best.b]}
 let deep=null,deepRun=false,deepBump=0;
 let coins=Math.max(0,Math.floor(+localStorage.getItem('jwfCoins')||0)),cooler=[],lure=null,wanted=null,shopTab='sell',snaps=0,overSold=0;
 function saveGear(){try{localStorage.setItem('jwfGear',JSON.stringify(GEAR));localStorage.setItem('jwfCoins',String(coins))}catch(e){}}
@@ -177,7 +181,7 @@ function updDrive(){const v=(3.4+.18*Math.min(level,12))*S*(arriveT?Math.max(0,1
    // current shoves the boat away from the deep hole; enough boat+motor power rides through it
    boat.tx+=away*(ok?.6:2.6+1.4*(deep.need-pw))*S*f;if(!ok)boat.tx+=Math.sin(t*.5)*1.5*S;
    const dd=Math.hypot(boat.x-deep.x,dist-deep.d);
-   if(!ok&&dd<deep.r+16*S){boat.x=deep.x+away*(deep.r+16*S);boat.tx=boat.x+away*40*S;shake=6;if(!deepBump){deepBump=90;SND.junk();say(`🌊 Too rough! Need 🚤 Power ${deep.need}`,150)}}
+   if(!ok&&dd<deep.r+16*S){boat.x=deep.x+away*(deep.r+16*S);boat.tx=boat.x+away*40*S;shake=6;if(!deepBump){deepBump=90;SND.junk();say(`🌊 Current too strong! Need ${needGear(deep.need)}`,150)}}
    else if(ok&&dd<deep.r){arriveT=1;deepRun=true;spot={d:deep.d,x:deep.x,r:deep.r};deep=null;pop('Deep spot! 🌊🎣',boat.x,BY()-60*S,'#7fffd0',26)}}
   else if(deep&&dist-deep.d>deep.zy)deep=null}
  if(!arriveT&&Math.hypot(boat.x-spot.x,dist-spot.d)<spot.r){arriveT=1;pop('Fishing spot! 🎣',spot.x,BY()-60*S,'#ffe14a',26)}
@@ -259,8 +263,8 @@ function sideBoat(t0){const bx=BX(),by=SY()+Math.sin(t0*.05)*3*S+Math.sin(t0*.25
  if(fight){const k=CL(fight.ten,0,1);g.quadraticCurveTo(LERP(tp.x-20*S,tp.x,0)+10*S*k,LERP(tp.y+20*S,tp.y,.5)+40*S*k,tp.x+10*S*k,tp.y+45*S*k)}else g.lineTo(tp.x,tp.y);g.stroke();circ(hx,hy+2*S,4*S,'#333');
  jwoo(bx-4*S,by-8*S,s,fight?Math.sin(t0*.5):0);
  // hull
- g.fillStyle='#a8d8ee';g.beginPath();g.moveTo(bx-64*S,by-12*S);g.lineTo(bx+70*S,by-12*S);g.quadraticCurveTo(bx+60*S,by+16*S,bx+40*S,by+18*S);g.lineTo(bx-52*S,by+18*S);g.quadraticCurveTo(bx-62*S,by+8*S,bx-64*S,by-12*S);g.fill();
- g.fillStyle='#d2d9de';g.fillRect(bx-64*S,by-14*S,134*S,4*S);g.fillStyle='#86bdd8';g.fillRect(bx-62*S,by-3*S,128*S,3*S);for(let i=0;i<9;i++)circ(bx-50*S+i*13*S,by+14*S,1.1*S,'#7fb0c8');txt('J WOO',bx+6*S,by+9*S,10*S,'#1a5a8a');g.fillStyle='#555';rr(bx-76*S,by-22*S,14*S,26*S,4*S);g.fill();g.fillStyle='#333';g.fillRect(bx-72*S,by+4*S,5*S,16*S);
+ g.fillStyle=BOATS[GEAR.boat|0].col;g.beginPath();g.moveTo(bx-64*S,by-12*S);g.lineTo(bx+70*S,by-12*S);g.quadraticCurveTo(bx+60*S,by+16*S,bx+40*S,by+18*S);g.lineTo(bx-52*S,by+18*S);g.quadraticCurveTo(bx-62*S,by+8*S,bx-64*S,by-12*S);g.fill();
+ g.fillStyle='#d2d9de';g.fillRect(bx-64*S,by-14*S,134*S,4*S);g.fillStyle='#86bdd8';g.fillRect(bx-62*S,by-3*S,128*S,3*S);for(let i=0;i<9;i++)circ(bx-50*S+i*13*S,by+14*S,1.1*S,'#7fb0c8');txt('J WOO',bx+6*S,by+9*S,10*S,'#1a5a8a');{const mm=GEAR.motor|0,mw=(14+4*mm)*S,mh=(26+5*mm)*S;g.fillStyle=mm>=2?'#2a2a2a':'#555';rr(bx-62*S-mw,by-12*S-mh+16*S,mw,mh,4*S);g.fill();g.fillStyle='#333';g.fillRect(bx-62*S-mw/2-2.5*S,by+4*S,5*S,16*S);if(mm>=3){g.fillStyle='#2a2a2a';rr(bx-66*S-2*mw,by-12*S-mh+16*S,mw,mh,4*S);g.fill();g.fillStyle='#333';g.fillRect(bx-66*S-1.5*mw-2.5*S,by+4*S,5*S,16*S)}}
  g.restore();return{x:tp.x,y:tp.y}}
 function topBoat(x,y,a,s){g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba(0,0,0,.15)';g.beginPath();g.ellipse(3*s,5*s,16*s,30*s,0,0,TAU);g.fill();
  g.fillStyle=BOATS[GEAR.boat|0].col;g.beginPath();g.moveTo(0,-32*s);g.quadraticCurveTo(17*s,-12*s,15*s,24*s);g.lineTo(-15*s,24*s);g.quadraticCurveTo(-17*s,-12*s,0,-32*s);g.fill();g.strokeStyle='#e4eaee';g.lineWidth=3*s;g.stroke();g.strokeStyle='#6f8796';g.lineWidth=1.2*s;g.stroke();
@@ -343,8 +347,8 @@ function drawDrive(){const a=area,by=BY();g.fillStyle=a.w1;g.fillRect(0,0,W,H);
    for(let i=0;i<14;i++){const yy=zy-deep.zy+((i*29*S+t*2.2*S)%(deep.zy*2)),xx=deep.x+Math.sin(i*2.7)*deep.zx*.75,ph=(t*.15+i)%TAU;g.beginPath();g.arc(xx,yy,6*S,Math.PI*1.1+Math.sin(ph)*.2,Math.PI*1.9);g.stroke()}
    g.strokeStyle='rgba(180,240,255,.85)';g.lineWidth=3*S;const cd=-away;for(let i=0;i<5;i++){const yy=zy-deep.zy*.8+i*deep.zy*.4,xs=deep.x-cd*deep.zx*.8+cd*((t*2.5*S+i*47*S)%(deep.zx*1.6)),xe=xs+cd*14*S;g.beginPath();g.moveTo(xs,yy);g.lineTo(xe,yy);g.lineTo(xe-cd*6*S,yy-5*S);g.moveTo(xe,yy);g.lineTo(xe-cd*6*S,yy+5*S);g.stroke()}
    g.restore();const pr=deep.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(0,20,60,.55)';g.beginPath();g.arc(deep.x,zy,pr,0,TAU);g.fill();g.strokeStyle=ok?'rgba(120,255,210,.95)':'rgba(255,120,120,.95)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
-   txt('🌊🎣',deep.x,zy-4*S,FS(20),'#fff');const lx=CL(deep.x,70*S,W-70*S);txt(ok?'DEEP SPOT':`DEEP · need 🚤${deep.need}`,lx,zy+deep.r+16*S,FS(17),ok?'#7fffd0':'#ffd0d0','#04163a')}
-  else if(zy<-deep.zy-40*S&&zy>-2000*S){const lx=CL(deep.x,60*S,W-60*S);txt(ok?'🌊 Deep spot ahead':`🌊 Deep spot · need 🚤${deep.need}`,lx,HB+(WIDE()?44:52)*U(),FS(16),ok?'#7fffd0':'#ffd0d0','#04163a')}}
+   txt('🌊🎣',deep.x,zy-4*S,FS(20),'#fff');const lx=CL(deep.x,70*S,W-70*S);txt(ok?'DEEP SPOT':`🔒 Need ${needGear(deep.need)}`,lx,zy+deep.r+16*S,FS(17),ok?'#7fffd0':'#ffd0d0','#04163a')}
+  else if(zy<-deep.zy-40*S&&zy>-2000*S){const lx=CL(deep.x,60*S,W-60*S);txt(ok?'🌊 Deep spot ahead':`🌊 Deep spot 🔒 Need ${needGear(deep.need)}`,lx,HB+(WIDE()?44:52)*U(),FS(16),ok?'#7fffd0':'#ffd0d0','#04163a')}}
  // spot
  const spy=by-(spot.d-dist);if(spy>-80*S&&spy<H+80*S){const pr=spot.r*(1+.08*Math.sin(t*.12));g.fillStyle='rgba(255,240,120,.25)';g.beginPath();g.arc(spot.x,spy,pr,0,TAU);g.fill();g.strokeStyle='rgba(255,240,120,.9)';g.lineWidth=4*S;g.setLineDash([10*S,8*S]);g.lineDashOffset=-t;g.stroke();g.setLineDash([]);
   circ(spot.x,spy,12*S,'#ff4a4a');g.fillStyle='#fff';g.fillRect(spot.x-12*S,spy-3*S,24*S,6*S);txt('🎣',spot.x,spy-26*S,22*S,'#fff')}
@@ -460,7 +464,7 @@ function renderShop(){$('shCoins').textContent='🪙 '+coins;document.querySelec
  else if(shopTab=='rod'){h+=`<div class="note">Faster reels pull fish in quicker. Now: <b>${RODS[GEAR.rod|0].n}</b>.</div>`;
   RODS.forEach((L,i)=>{const own=i<=(GEAR.rod|0);h+=it('🎣',`<b>${L.n}</b>`,`Reel speed ×${L.r}`,i==(GEAR.rod|0)?'<button class="bb" disabled>✔ Using</button>':own?'<button class="bb" disabled>Owned</button>':`<button class="bb" data-a="buy" data-k="rod" data-i="${i}" ${coins>=L.c?'':'disabled'}>${L.c}🪙</button>`)})}
  else if(shopTab=='boat'){const pw=boatPow(),nx=AREAS[level%6],nd=Math.min(6,level%6+1);
-  h+=`<div class="note">🌊 Every area has a <b>deep spot</b> in rough water with a strong current. Bigger, rarer fish live there. Boat + motor = <b>🚤 Power ${pw}</b>. ${nx.n} deep spot needs <b>${nd}</b>${pw>=nd?' ✅':''}.</div>`;
+  h+=`<div class="note">🌊 Every area has a <b>deep spot</b> in rough water with a strong current. Bigger, rarer fish live there. Boat + motor = <b>🚤 Power ${pw}</b>. ${nx.n} deep spot needs <b>${nd}</b>${pw>=nd?' ✅':' 🔒 Get <b>'+needGear(nd)+'</b>'}.</div>`;
   const row=(kind,L)=>L.forEach((B,i)=>{const cur=GEAR[kind]|0;h+=it(kind=='boat'?'🚤':'⚙️',`<b>${B.n}</b> · +${B.p} power`,B.d,i==cur?'<button class="bb" disabled>✔ Using</button>':i<cur?'<button class="bb" disabled>Owned</button>':`<button class="bb" data-a="buy" data-k="${kind}" data-i="${i}" ${coins>=B.c?'':'disabled'}>${B.c}🪙</button>`)});
   h+='<div class="grp">🚤 Boats (rough water)</div>';row('boat',BOATS);h+='<div class="grp">⚙️ Motors (current)</div>';row('motor',MOTORS);
   h+=`<div class="note">Deep spots: Lake 1 · River 2 · Bay 3 · Reef 4 · Deep Sea 5 · Arctic 6</div>`}
