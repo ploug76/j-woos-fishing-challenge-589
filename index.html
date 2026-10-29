@@ -449,7 +449,7 @@ $('howb').onclick=e=>{e.stopPropagation();showPanel(`<h2>How to Play 🎣</h2><p
 <p><b>🧵 Tension:</b> Big fish pull hard, and harder when they run. Reeling against a pulling fish raises the tension bar. Past the white mark it's red, and at 100% the line SNAPS and the fish escapes. Stronger line holds bigger fish.</p>
 <p><b>🏪 Bait Shop:</b> After every area J Woo docks at the bait shop. Sell your catch for 🪙 coins (rare and big fish pay more, and the shop pays 2× for its “wanted” fish). Coins are saved on this phone. Buy <b>🧵 Line</b> (holds heavier fish), <b>🎣 Rods &amp; Reels</b> (reel in faster) and <b>🪝 Lures</b> (bigger, rarer or certain fish; most last one round). Pick a lure, then set sail! If the boat sinks, your cooler is sold for you.</p>
 <p><b>🚤 Boats &amp; Motors:</b> Each area has a dark <b>🌊 deep spot</b> in rough water, off to one side before the regular buoy. A strong current pushes small boats away. Buy better <b>boats</b> and <b>motors</b> in the shop's 🚤 Boats tab to raise your 🚤 Power (Lake needs 1, River 2, Bay 3, Reef 4, Deep Sea 5, Arctic 6). With enough power, steer into the deep spot to fish for bigger, rarer fish. Upgrades are saved on this phone.</p>
-<p><b>🗺️ Six areas:</b> Lake → River → Bay → Coral Reef → Deep Sea → Arctic, then around again with bigger fish and bigger targets.</p><p>Keys: ←/→ steer · → or C cast · Space/↓ drop, sink & reel · P pause</p>`)};
+<p><b>🗺️ Six areas:</b> Lake → River → Bay → Coral Reef → Deep Sea → Arctic, then around again with bigger fish and bigger targets.</p><p>Keys: ←/→ steer · → or C cast · Space/↓ drop, sink & reel · P pause</p><p class="gp-help"><b>🎮 Controller</b> (USB or Bluetooth, computer or phone): stick or D-pad ←/→ steer · A drop, sink &amp; reel (hold) · X cast · Y opens this help on the title · Start pause · Select sound. Menus: D-pad + A, B = back.</p>`)};
 $('logb').onclick=e=>{e.stopPropagation();let h='<h2>📖 Catch Log</h2>',tot=0,got=0;for(const a of AREAS){h+=`<h3>${a.n}</h3>`;for(const f of a.fish){tot++;const L=LOG[f[0]];if(L&&L.n){got++;h+=`<div class="row"><span>🐟 ${f[0]} ×${L.n}</span><span>best ${L.b.toFixed(1)} lb</span></div>`}else h+=`<div class="row"><span>❓ ???</span><span>${f[0].length>0?'not caught yet':''}</span></div>`}}
  h+='<h3>Junk ♻️</h3>';for(const j of JUNK){const L=LOG[j.n];h+=L&&L.n?`<div class="row"><span>${j.n}</span><span>×${L.n}</span></div>`:'<div class="row"><span>❓ ???</span><span></span></div>'}showPanel(h.replace('<h2>📖 Catch Log</h2>',`<h2>📖 Catch Log</h2><p style="text-align:center">${got} / ${tot} species caught</p>`))};
 // ---------- bait shop
@@ -772,4 +772,18 @@ window.PALB=api})();
 #palbTabs button{min-height:48px!important;font-size:16px!important}
 #palbList li{min-height:30px;height:auto!important;font-size:16px!important}
 </style>
+<!-- gamepad:start -->
+<script src="gamepad.js?v=2"></script>
+<script>
+GamepadSupport.init({
+ keys:{left:'ArrowLeft',right:'ArrowRight',down:'ArrowDown',a:'Space',x:'KeyC',rt:'KeyC',y:function(p){if(p&&(state==='title'||state==='over'))document.getElementById('howb').click()},start:'KeyP',back:function(p){if(p)document.getElementById('mute').click()}},
+ noRepeat:['x','y','rt','start','back'],
+ repeat:false,
+ ignoreSel:'#dock,#mute,#inst,#ios,.tb,#dockHint,#pad,.pad,#padt,#pause,#howb,#logb',
+ menu:function(){return !!document.querySelector('#palbOv.on,#smpLock.on')||state==='shop'||getComputedStyle(document.getElementById('panel')).display!=='none';},
+ backSel:'#pclose',
+ hint:{text:'🎮 Controller: A start / drop & reel · X cast · ◀ ▶ steer · Y how to play · Start pause',when:function(){return state==='title'&&!document.querySelector('#palbOv.on,#smpLock.on')}}
+});
+</script>
+<!-- gamepad:end -->
 </body></html>
